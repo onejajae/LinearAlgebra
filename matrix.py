@@ -13,7 +13,7 @@ class Matrix(Vector):
         for i in range(0,len(self)-1):
             ret_str += str(self[i]) + "\n"
         else:
-            ret_str += str(self[i])
+            ret_str += str(self[i+1])
         return ret_str
 
     def get_row(self, index):
@@ -28,7 +28,7 @@ class Matrix(Vector):
             for i in range(len(self)):
                 row_vector = Vector()
                 for j in range(len(other[0])):
-                    inner_product = self.get_row(i) * self.get_column(j)
+                    inner_product = self.get_row(i) * other.get_column(j)
                     row_vector.append(inner_product)
                 ret_matrix.append(row_vector)
             return ret_matrix
@@ -41,7 +41,7 @@ class Matrix(Vector):
             for i in range(len(self)):
                 row_vector = Vector()
                 for j in range(len(other[0])):
-                    inner_product = self.get_row(i) * self.get_column(j)
+                    inner_product = self.get_row(i) * other.get_column(j)
                     row_vector.append(inner_product)
                 ret_matrix.append(row_vector)
             return ret_matrix
@@ -76,6 +76,9 @@ if __name__ == "__main__":
     c = Vector([9,8,7,6])
     d = Vector([5,4,3,2])
     m = Matrix([a,b,c,d])
+    q=Vector([2,3,-1])
+    p=Vector([1,-1,1])
+    r=Vector([3,2,-3])
+    qpr = Matrix([q,p,r])
+    print(Matrix([Vector([0.5,0,0]),Vector([0,1,0]),Vector([0,0,1])])*qpr)
 
-    print(m/3)
-    print(m+m)
