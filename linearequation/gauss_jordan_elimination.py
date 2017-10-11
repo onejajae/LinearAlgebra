@@ -1,3 +1,7 @@
+from matrix import Matrix
+from vector import Vector
+
+
 def augmenting(matrix, uv):
     if len(matrix) != len(uv):
         return
@@ -13,6 +17,7 @@ def forward_elimination(matrix):
             for row_index in range(i,i+len(matrix[i:])):
                 if matrix[row_index][i-1] != 0:
                     matrix[i-1], matrix[row_index] = matrix[row_index], matrix[i-1]
+                    break
         matrix[i-1] = scaling(matrix[i-1], i-1)
         for row_index in range(i, i+len(matrix[i:])):
             matrix[row_index] = scaling(matrix[row_index],i-1)
@@ -76,6 +81,12 @@ if __name__ == "__main__":
     c=[3,2,-3,-2,8]
     d=[1,2,3,4,0]
     e=[4,5,6,7,8]
+    _a = Vector(a)
+    _b = Vector(b)
+    _c = Vector(c)
+    _d = Vector(d)
+    _e = Vector(e)
+    _m = Matrix([_a,_b,_c,_d,_e])
     a1=[1,0,0,0,0]
     a2=[0,1,0,0,0]
     a3=[0,0,1,0,0]
@@ -83,5 +94,20 @@ if __name__ == "__main__":
     a5=[0,0,0,0,1]
     m = [a+a1,b+a2,c+a3,d+a4,e+a5]
 
+    q=Vector([2,3,-1])
+    p=Vector([1,-1,1])
+    r=Vector([3,2,-3])
+    qpr = Matrix([q,p,r])
+    """
+    for i in qpr * Matrix([[1, 0, 0], [0, 1, 0], [0, 0, 1]]):
+        print(i)
+
+    for i in forward_elimination(qpr):
+        print(i)
     for i in (backward_elimination(forward_elimination(m))):
+        print(i)
+    for i in (backward_elimination(forward_elimination(_m))):
+        print(i)
+    """
+    for i in forward_elimination(_m):
         print(i)
