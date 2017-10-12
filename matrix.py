@@ -72,7 +72,7 @@ class Matrix(Vector):
 
 class IdentityMatrix(Matrix):
     def __init__(self, size):
-        Matrix.__init__(Matrix())
+        super().__init__()
         for i in range(size):
             row_vector = Vector()
             for j in range(size):
@@ -94,5 +94,5 @@ if __name__ == "__main__":
     r=Vector([3,2,-3])
     qpr = Matrix([q,p,r])
     print(Matrix([Vector([0.5,0,0]),Vector([0,1,0]),Vector([0,0,1])])*qpr)
-    print(IdentityMatrix(10))
+    print(IdentityMatrix(5))
 
