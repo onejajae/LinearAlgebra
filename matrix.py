@@ -70,6 +70,19 @@ class Matrix(Vector):
         return ret_vec
 
 
+class IdentityMatrix(Matrix):
+    def __init__(self, size):
+        Matrix.__init__(Matrix())
+        for i in range(size):
+            row_vector = Vector()
+            for j in range(size):
+                if i == j:
+                    row_vector.append(1)
+                else:
+                    row_vector.append(0)
+            self.append(row_vector)
+
+
 if __name__ == "__main__":
     a = Vector([1,2,3,4])
     b = Vector([5,6,7,8])
@@ -81,4 +94,5 @@ if __name__ == "__main__":
     r=Vector([3,2,-3])
     qpr = Matrix([q,p,r])
     print(Matrix([Vector([0.5,0,0]),Vector([0,1,0]),Vector([0,0,1])])*qpr)
+    print(IdentityMatrix(10))
 
