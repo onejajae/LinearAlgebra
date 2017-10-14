@@ -72,7 +72,7 @@ class Matrix(Vector):
 
 class IdentityMatrix(Matrix):
     def __init__(self, size):
-        super().__init__()
+        super().__init__(self)
         for i in range(size):
             row_vector = Vector()
             for j in range(size):
@@ -81,6 +81,16 @@ class IdentityMatrix(Matrix):
                 else:
                     row_vector.append(0)
             self.append(row_vector)
+
+
+class AugmentedMatrix(Matrix):
+    def __init__(self, left_matrix, right_matrix):
+        if len(left_matrix) != len(right_matrix):
+            raise IndexError
+        else:
+            super().__init__(self)
+            for i in range(len(left_matrix)):
+                self.append(Vector(list(left_matrix[i]) + list(right_matrix[i])))
 
 
 if __name__ == "__main__":
@@ -95,4 +105,4 @@ if __name__ == "__main__":
     qpr = Matrix([q,p,r])
     print(Matrix([Vector([0.5,0,0]),Vector([0,1,0]),Vector([0,0,1])])*qpr)
     print(IdentityMatrix(5))
-
+    print(AugmentedMatrix(m,qpr))
