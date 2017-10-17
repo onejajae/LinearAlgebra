@@ -37,7 +37,6 @@ def row_operations(matrix):
         print("r%d <- %f * r%d" % (i, 1 / matrix[i][i], i))
         matrix[i] = matrix[i] / matrix[i][i]    #scaling
 
-
         for row_index in range(i+1, len(matrix)):
             print("r%d <- r%d - (%d)r%d" % (row_index, row_index, matrix[row_index][i], i))
             matrix[row_index] = matrix[row_index] - (matrix[row_index][i] * matrix[i])   #replacement
@@ -50,6 +49,7 @@ def row_operations(matrix):
 
 def get_forward_elementary_matrices_list(matrix):
     matrix_size = len(matrix)
+    identity = IdentityMatrix(matrix_size)
     permutation_matrices_list = []
     forward_elementary_matrices_list = []
     for pivot_index in range(len(matrix)-1):
@@ -62,25 +62,31 @@ def get_forward_elementary_matrices_list(matrix):
                     break
         scaling_elementary_matrix = get_scaling_elementary_matrix(matrix_size, pivot_index,
                                                                   matrix[pivot_index][pivot_index])
+        identity[pivot_index][pivot_index] = matrix[pivot_index][pivot_index]
         forward_elementary_matrices_list.append(scaling_elementary_matrix)
         matrix = scaling_elementary_matrix * matrix
+
         for target_index in range(pivot_index+1, len(matrix)):
             replacement_matrix = get_replacement_elementary_matrix(matrix_size, pivot_index, target_index,
                                                                    matrix[target_index][pivot_index])
+            identity[target_index][pivot_index] = matrix[target_index][pivot_index]
             forward_elementary_matrices_list.append(replacement_matrix)
             matrix = replacement_matrix * matrix
+
     else:
         scaling_elementary_matrix = get_scaling_elementary_matrix(matrix_size, pivot_index + 1,
                                                                   matrix[pivot_index+1][pivot_index+1])
+        identity[pivot_index + 1][pivot_index + 1] = matrix[pivot_index + 1][pivot_index + 1]
         forward_elementary_matrices_list.append(scaling_elementary_matrix)
         matrix = scaling_elementary_matrix * matrix
-    return matrix
+
+    return identity, matrix
 
 
 if __name__ == "__main__":
-    a = Vector([0,1,3])
-    b = Vector([1,7,3])
-    c = Vector([3,6,1])
+    a = Vector([2,6,2])
+    b = Vector([-3,-8,0])
+    c = Vector([4,9,2])
     m1 = Matrix([a,b,c])
 
     d = Vector([0.5,0,0])
@@ -88,4 +94,5 @@ if __name__ == "__main__":
     f = Vector([0,0,1])
     m2 = Matrix([d,e,f])
 
-    print(get_forward_elementary_matrices_list(m1))
+    print(get_forward_elementary_matrices_list(m1)[0])
+    print(get_forward_elementary_matrices_list(m1)[1])
